@@ -58,8 +58,10 @@ using UnitySampleAssets.Characters.FirstPerson;
 
 
         public GameObject bullet;
+        public GameObject bulletTeleport;
 	    public Health HealthPlayer;
         public Transform gun;
+        public Transform gunTeleport;
         public float shootRate = 0f;
         public float shootForce = 0f;
         private float shootRateTimeStamp = 0f;
@@ -121,6 +123,17 @@ using UnitySampleAssets.Characters.FirstPerson;
                     GameObject go = (GameObject)Instantiate(
                        bullet, gun.position, gun.rotation);
                     go.GetComponent<Rigidbody>().AddForce(gun.forward * shootForce);
+                    shootRateTimeStamp = Time.time + shootRate;
+                }
+            }
+
+            if(Input.GetMouseButtonDown(1))
+            {
+                if(Time.time > shootRateTimeStamp)
+                {
+                    GameObject go = (GameObject)Instantiate(
+                       bulletTeleport, gunTeleport.position, gunTeleport.rotation);
+                    go.GetComponent<Rigidbody>().AddForce(gunTeleport.forward * shootForce);
                     shootRateTimeStamp = Time.time + shootRate;
                 }
             }
